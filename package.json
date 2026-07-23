@@ -1,0 +1,26 @@
+{
+  "name": "bill-payment-api-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx tsx ./node_modules/mocha/bin/mocha.js",
+    "smoke-user-management-api-test": "npm run test -- src/tests/user-management-api-test.spec.ts --grep @smoke"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^26.1.1",
+    "@types/supertest": "^7.2.1",
+    "dotenv": "^17.4.2",
+    "mocha": "^11.7.6",
+    "supertest": "^7.2.2",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2",
+    "uuid": "^14.0.1",
+    "winston": "^3.19.0"
+  }
+}
