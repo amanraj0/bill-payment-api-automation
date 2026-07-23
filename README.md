@@ -6,7 +6,7 @@ A scalable and production-style API automation framework built with **TypeScript
 
 ## Overview
 
-This framework is designed to automate testing of the **Bill Payment / User Management Practice API** while showcasing clean architecture, reusable components, and maintainable test design.
+This framework is designed to automate testing of the **Bill Payment API** while showcasing clean architecture, reusable components, and maintainable test design.
 
 The framework includes:
 
