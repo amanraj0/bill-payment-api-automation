@@ -9,7 +9,7 @@ class Log {
     logger.warn(message);
   }
 
-  static error(message: string, error?: unknown) {
+  static error(message?: string, error?: unknown) {
     if (error instanceof Error) {
       logger.error(`${message}\n${error.stack}`);
     } else {

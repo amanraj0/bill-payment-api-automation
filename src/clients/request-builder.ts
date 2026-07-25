@@ -1,6 +1,6 @@
 import request, { type Test } from "supertest";
 import { config, API_KEY } from "../configs/index.js";
-import { getUUID } from "../utils/index.js";
+import { TestExecutionContext } from "../context/index.js";
 
 class RequestBuilder {
   private readonly client;
@@ -36,7 +36,7 @@ class RequestBuilder {
   ): this {
     const finalHeaders = {
       ...headers,
-      "x-request-id": getUUID(),
+      "x-request-id": TestExecutionContext.get()?.traceId,
       ...(isAuthRequired && {
         "X-API-Key": API_KEY,
       }),
