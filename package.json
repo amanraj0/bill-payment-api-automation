@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx tsx ./node_modules/mocha/bin/mocha.js",
-    "smoke-user-management-api-test": "npm run test -- src/tests/user-management-api-test.spec.ts --grep @smoke"
+    "test": "npx tsx ./node_modules/mocha/bin/mocha.js --require ./src/hooks/global-hooks.ts",
+    "smoke-user-management-api-test": "npm run test -- src/tests/user-management-api-test.spec.ts --grep @smoke",
+    "regression-user-management-api-test": "npm run test -- src/tests/user-management-api-test.spec.ts --grep @regression"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.1.1",
     "@types/supertest": "^7.2.1",
+    "chai": "^6.2.2",
     "dotenv": "^17.4.2",
     "mocha": "^11.7.6",
     "supertest": "^7.2.2",
