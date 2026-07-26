@@ -1,5 +1,7 @@
 import { assert } from "chai";
 import { type Response } from "supertest";
+import { AssertionCollector } from "../report/index.js";
+import { TestExecutionContext } from "../context/index.js";
 
 class AssertionHelpers {
   static assertStatusCode(
@@ -7,12 +9,33 @@ class AssertionHelpers {
     expectedStatusCode: number,
     message?: string,
   ) {
-    assert.equal(
-      response.status,
-      expectedStatusCode,
-      message ||
-        `Expected status code to be ${expectedStatusCode} but got ${response.status}`,
-    );
+    try {
+      assert.equal(
+        response.status,
+        expectedStatusCode,
+        message ||
+          `Expected status code to be ${expectedStatusCode} but got ${response.status}`,
+      );
+
+      AssertionCollector.record({
+        name: "Status Code Assertion",
+        expected: expectedStatusCode,
+        actual: response.status,
+        status: "PASS",
+        traceId: TestExecutionContext.get()?.traceId || "",
+      });
+    } catch (error) {
+      AssertionCollector.record({
+        name: "Status Code Assertion",
+        expected: expectedStatusCode,
+        actual: response.status,
+        status: "FAIL",
+        message: (error as Error).message,
+        traceId: TestExecutionContext.get()?.traceId || "",
+      });
+
+      throw error;
+    }
   }
 
   static assertEqual(actual: any, expected: any, message?: string) {
