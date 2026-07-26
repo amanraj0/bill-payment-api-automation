@@ -1,6 +1,6 @@
-import { Log } from "../utils/index.js";
 import { TestExecutionContext } from "../context/index.js";
-import { getUUID } from "../utils/index.js";
+import { getUUID, Log } from "../utils/index.js";
+import { AssertionReporter } from "../report/index.js";
 
 export const mochaHooks = {
   beforeEach(this: Mocha.Context) {
@@ -9,6 +9,7 @@ export const mochaHooks = {
       testName: this.currentTest?.title.split("@")[0] ?? "",
       testContext: this,
       traceId: getUUID(),
+      assertions: [],
     });
 
     const context = TestExecutionContext.get();
@@ -35,5 +36,7 @@ export const mochaHooks = {
         );
         break;
     }
+
+    AssertionReporter.publish();
   },
 };

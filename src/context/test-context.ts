@@ -1,11 +1,5 @@
 import { AsyncLocalStorage } from "node:async_hooks";
-
-export interface TestContext {
-  suiteName: string;
-  testName: string;
-  testContext: Mocha.Context;
-  traceId: string;
-}
+import { type TestContext } from "./index.js";
 
 export class TestExecutionContext {
   private static readonly storage = new AsyncLocalStorage<TestContext>();
