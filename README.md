@@ -220,7 +220,7 @@ Mochawesome
 ```text
                  Assertion Helper
 
-        ┌────────────┬────────────┬────────────┐
+        ┌────────────┬────────────┬
         │            │            │
         ▼            ▼            ▼
  Status Code     Equal      JSON Schema
@@ -243,7 +243,8 @@ npm install
 ```
 
 ```bash
-npm test
+npm run <script>
+```
 
 ---
 
@@ -263,8 +264,6 @@ npm test
 # Future Enhancements
 
 - OpenAPI Contract Validation
-- Request Interceptors
-- Response Interceptors
 - Retry Mechanism
 - Parallel Execution
 - Allure Reporting
