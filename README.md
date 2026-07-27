@@ -40,19 +40,18 @@ A production-inspired API automation framework built using **TypeScript**, **Moc
 ```text
 src
 │
-├── config
+├── clients
 │
-├── controllers
+├── configs
 │
-├── core
-│   ├── assertion
-│   ├── context
-│   ├── hooks
-│   ├── logger
-│   ├── reporting
-│   ├── request
-│   └── validation
+├── context
+|
+|── endpoints
 │
+|── hooks
+│   
+|── report
+│   
 ├── schemas
 │
 ├── services
@@ -245,13 +244,6 @@ npm install
 
 ```bash
 npm test
-```
-
-Generate Mochawesome Report
-
-```bash
-npm run report
-```
 
 ---
 
