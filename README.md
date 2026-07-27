@@ -1,306 +1,291 @@
 # Bill Payment API Automation Framework
 
-A scalable and production-style API automation framework built with **TypeScript**, **Node.js**, **Mocha**, **Chai** and **Supertest**. This project demonstrates best practices for designing maintainable API test automation frameworks using a layered architecture.
-
----
-
-## Overview
-
-This framework is designed to automate testing of the **Bill Payment API** while showcasing clean architecture, reusable components, and maintainable test design.
-
-The framework includes:
-
-- Reusable HTTP request builder
-- Environment-based configuration
-- Centralized API endpoint definitions
-- Service layer abstraction
-- Modular test organization
-- Logging with Winston
-- TypeScript support
-- Mocha test runner
-
----
-
-## Why This Project?
-
-This project demonstrates:
-
-- Clean and scalable framework architecture
-- Separation of concerns
-- Reusable API client design
-- Service-oriented automation approach
-- Type-safe automation using TypeScript
-- Production-style project organization
-- Interview-ready API automation framework
-
----
-
-## Tech Stack
-
-- TypeScript
-- Node.js
-- Mocha
-- TSX
-- Supertest
-- dotenv
-- Winston
-- Chai
-
----
-
-## Project Structure
-
-```text
-src
-├── clients
-│   ├── requestBuilder.ts
-│   └── requestExecutor.ts
-│
-├── configs
-│   └── config.ts
-│
-├── endpoints
-│   └── userManagementEndpoints.ts
-│
-├── services
-│   └── userManagementService.ts
-│
-├── tests
-│   └── user-management-api-test.spec.ts
-│
-└── utils
-    ├── logger.ts
-    └── helpers.ts
-
-logs
-.env
-package.json
-README.md
-```
-
----
-
-## Framework Architecture
-
-The framework follows a layered architecture that separates responsibilities into independent modules.
-
-### Clients
-
-Responsible for sending HTTP requests.
-
-- Builds requests
-- Adds headers
-- Handles query parameters
-- Executes API calls
-
----
-
-### Configs
-
-Loads configuration from environment variables.
-
-Examples:
-
-- Base URL
-- API keys
-- Test environment
-
----
-
-### Endpoints
-
-Stores API endpoint paths in a centralized location.
-
-Example:
-
-```ts
-export const UserEndpoints = {
-    createUser: "/users",
-    getUser: "/users/:id"
-};
-```
-
----
-
-### Services
-
-Encapsulates business operations and API interactions.
-
-Instead of writing requests directly inside test files:
-
-```ts
-await request.post("/users");
-```
-
-Tests interact with services:
-
-```ts
-await userManagementService.createUser(payload);
-```
-
-This keeps tests clean and reusable.
-
----
-
-### Tests
-
-Contains Mocha test suites.
-
-Responsibilities include:
-
-- Calling service methods
-- Validating responses
-- Assertions
-- End-to-end API scenarios
-
----
-
-### Utils
-
-Contains reusable utilities such as:
-
-- Logger
-- Helper methods
-- Common utilities
+A production-inspired API automation framework built using **TypeScript**, **Mocha**, **Chai**, **Supertest**, and **AJV**. The framework follows a modular architecture with reusable components for request execution, assertions, schema validation, logging, and reporting.
 
 ---
 
 ## Features
 
-- Layered architecture
-- Environment-based configuration
-- Reusable request builder
-- Centralized endpoint management
-- Service layer abstraction
-- Winston logging
-- Modular and maintainable codebase
-- Easy to extend for additional APIs
+- API automation using Supertest
+- TypeScript support
+- Modular controller-based architecture
+- Centralized request builder
+- Reusable assertion helpers
+- JSON Schema validation using AJV
+- Assertion reporting
+- Request & response logging
+- AsyncLocalStorage based test context
+- Mochawesome HTML reports
+- Environment configuration support
 
 ---
 
-# Getting Started
+## Tech Stack
 
-## Prerequisites
-
-Make sure the following are installed:
-
-- Node.js 18+
-- npm
+| Technology        | Purpose                |
+| ----------------- | ---------------------- |
+| TypeScript        | Programming Language   |
+| Mocha             | Test Runner            |
+| Chai              | Assertions             |
+| Supertest         | API Testing            |
+| AJV               | JSON Schema Validation |
+| Mochawesome       | HTML Reporting         |
+| Winston           | Logging                |
+| AsyncLocalStorage | Test Context           |
 
 ---
 
-## Installation
+# Project Structure
 
-Clone the repository.
-
-```bash
-git clone https://github.com/your-username/bill-payment-api-automation.git
+```text
+src
+│
+├── config
+│
+├── controllers
+│
+├── core
+│   ├── assertion
+│   ├── context
+│   ├── hooks
+│   ├── logger
+│   ├── reporting
+│   ├── request
+│   └── validation
+│
+├── schemas
+│
+├── services
+│
+├── tests
+│
+└── utils
 ```
 
-Move into the project directory.
+---
 
-```bash
-cd bill-payment-api-automation
+# High Level Architecture
+
+```text
+                  Test Suites
+                       │
+                       ▼
+                 API Controllers
+                       │
+                       ▼
+                Request Builder
+                       │
+                       ▼
+                  Supertest Client
+                       │
+                       ▼
+                    REST API
+                       │
+                       ▼
+                    Response
+                       │
+         ┌─────────────┼──────────────┐
+         ▼             ▼              ▼
+   Status Code     Response Body   JSON Schema
+   Assertions      Assertions      Validation
+         │             │              │
+         └─────────────┼──────────────┘
+                       ▼
+              Assertion Collector
+                       │
+                       ▼
+              Mochawesome Report
 ```
 
-Install dependencies.
+---
+
+# Request Execution Flow
+
+```text
+Test
+
+↓
+
+Controller
+
+↓
+
+Request Builder
+
+↓
+
+Supertest
+
+↓
+
+REST API
+
+↓
+
+HTTP Response
+
+↓
+
+Assertion Helper
+
+↓
+
+Assertion Collector
+
+↓
+
+Mochawesome Report
+```
+
+---
+
+# Schema Validation Flow
+
+```text
+Response
+
+↓
+
+AssertionHelper.assertJsonSchema()
+
+↓
+
+SchemaValidator
+
+↓
+
+WeakMap Cache
+
+        │
+        ├───────────────┐
+        │               │
+    Found          Not Found
+        │               │
+        │        Compile Schema
+        │               │
+        └───────┬───────┘
+                ▼
+       Compiled Validator
+
+                │
+
+                ▼
+
+      validator(response)
+
+                │
+
+        true / false
+
+                │
+
+                ▼
+
+      Assertion Collector
+```
+
+---
+
+# Logging Flow
+
+```text
+Mocha Hook
+
+↓
+
+TestExecutionContext
+
+↓
+
+AsyncLocalStorage
+
+↓
+
+Request Builder
+
+↓
+
+Logger
+
+↓
+
+Console
+File
+Mochawesome
+```
+
+---
+
+# Assertion Architecture
+
+```text
+                 Assertion Helper
+
+        ┌────────────┬────────────┬────────────┐
+        │            │            │
+        ▼            ▼            ▼
+ Status Code     Equal      JSON Schema
+ Assertion     Assertion     Assertion
+        │            │            │
+        └────────────┼────────────┘
+                     ▼
+           Assertion Collector
+                     │
+                     ▼
+            Mochawesome Report
+```
+
+---
+
+# Running the Tests
 
 ```bash
 npm install
 ```
 
----
-
-## Environment Configuration
-
-Create a `.env` file in the project root.
-
-```env
-TEST_ENV=dev
-API_KEY=your_api_key
-```
-
-The framework automatically loads these values using `dotenv`.
-
----
-
-## Running Tests
-
-Run all tests.
-
 ```bash
 npm test
 ```
 
-Run smoke tests.
+Generate Mochawesome Report
 
 ```bash
-npm run smoke-user-management-api-test
+npm run report
 ```
 
 ---
 
-## Example Test Scenario
+# Design Principles
 
-A sample test is available at:
-
-```text
-src/tests/user-management-api-test.spec.ts
-```
-
-The test demonstrates:
-
-- Creating a new user
-- Sending requests through the service layer
-- Validating response status
-- Verifying response payload
+- Separation of Concerns
+- Reusable Components
+- Modular Architecture
+- Centralized Logging
+- Schema Driven Validation
+- Clean Test Design
+- Type Safety
+- Maintainability
 
 ---
 
-## Logging
+# Future Enhancements
 
-The framework uses **Winston** for logging.
-
-Logs are written to:
-
-- Console
-- `logs/` directory
-
-This helps with debugging, request tracing, and execution analysis.
-
----
-
-## Future Improvements
-
-Some enhancements planned for the framework include:
-
-- Request & Response logging
-- JSON Schema validation
-- Custom assertions
-- API retry mechanism
-- Test data builders
-- HTML reporting
-- CI/CD integration with GitHub Actions
-- Parallel test execution
-- Authentication utilities
-- Database validation helpers
+- OpenAPI Contract Validation
+- Request Interceptors
+- Response Interceptors
+- Retry Mechanism
+- Parallel Execution
+- Allure Reporting
+- Docker Integration
+- CI/CD Pipeline
 
 ---
 
-## Learning Objectives
+# Author
 
-This project demonstrates concepts commonly expected from an Automation Engineer or SDET, including:
+**Aman Raj**
 
-- API automation framework design
-- TypeScript best practices
-- Clean code principles
-- Reusable HTTP client implementation
-- Service layer abstraction
-- Modular architecture
-- Environment management
-- Logging and debugging
-
----
+Senior Software Development Engineer in Test (SDET)
 
 ## Practice API
 
