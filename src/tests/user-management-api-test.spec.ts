@@ -1,5 +1,6 @@
 import { UserManagementController } from "../services/index.js";
 import { AssertionHelpers } from "../utils/index.js";
+import { createUserSchema } from "../schema/index.js";
 
 let userManagementController: UserManagementController;
 
@@ -11,14 +12,20 @@ describe("User Management API Tests", async function () {
   it("should create a new user successfully @regression @smoke", async function () {
     const response = await userManagementController.createUser(
       {
-        email: "aman.raj1121@example.com",
+        email: "aman.1ra1j11211111@example.com",
         firstName: "Aman",
         lastName: "Raj",
       },
       true,
     );
 
-    AssertionHelpers.assertStatusCode(response, 409);
+    AssertionHelpers.assertStatusCode(response, 201);
+
+    AssertionHelpers.assertJsonSchema(
+      response,
+      createUserSchema,
+      "Create New User Response Schema",
+    );
   });
 
   it("should get an error when email is not provided @regression", async function () {

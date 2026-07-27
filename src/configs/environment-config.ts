@@ -10,7 +10,7 @@ const Environments: Record<string, EnvironmentConfig> = {
   dev: {
     env: "dev",
     baseUrl: "https://billpay-api.gauravkhurana-practice-api.workers.dev",
-    logLevel: "info",
+    logLevel: "debug",
   },
 };
 
