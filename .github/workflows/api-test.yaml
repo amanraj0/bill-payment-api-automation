@@ -24,11 +24,6 @@ jobs:
       API_KEY: ${{ secrets.API_KEY }}
 
     steps:
-      - name: Check secret
-        run: |
-          echo "$API_KEY"
-          echo "Length: ${#API_KEY}"
-
       - name: Checkout Repo
         uses: actions/checkout@v4
 
