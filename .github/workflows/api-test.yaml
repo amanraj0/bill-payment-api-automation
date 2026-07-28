@@ -17,14 +17,18 @@ on:
 jobs:
   api-test:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
 
     env:
       TEST_ENV: ${{github.event.inputs.environment}}
       API_KEY: ${{ secrets.API_KEY }}
-    run: |
-      echo "$API_KEY"
 
     steps:
+      - name: Check secret
+        run: |
+          echo "$API_KEY"
+          echo "Length: ${#API_KEY}"
+
       - name: Checkout Repo
         uses: actions/checkout@v4
 
