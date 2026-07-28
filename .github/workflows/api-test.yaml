@@ -21,6 +21,8 @@ jobs:
     env:
       TEST_ENV: ${{github.event.inputs.environment}}
       API_KEY: ${{ secrets.API_KEY }}
+    run: |
+      echo "$API_KEY"
 
     steps:
       - name: Checkout Repo
