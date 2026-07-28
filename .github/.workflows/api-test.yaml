@@ -1,0 +1,52 @@
+name: Bill Payment Api Automation
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run test on"
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - sit
+      script:
+        description: "Script to run"
+        required: true
+        type: input
+  jobs:
+    api-test:
+      runs-on: ubuntu-latest
+
+      env:
+        TEST_ENV: ${{github.event.inputs.environment}}
+        TEST_SCRIPT: ${{github.event.inputs.script}}
+
+      steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v4
+
+        - name: Setup NodeJs
+          uses: actions/setup-node@v4
+          with:
+            node-version: 25
+
+        - name: Install Dependencies
+          run: npm ci
+
+        - name: Run Tests
+          run: npm run ${{TEST_SCRIPT}}
+
+        - name: Upload Report
+          if: always()
+          uses: actions/upload-artifact@v4
+          with:
+            name: Bill-Payment-Api-Automation-Report
+            path: reports/
+
+        - name: Upload Logs
+          if: always()
+          uses: actions/upload-artifact@v4
+          with:
+            name: Bill-Payment-Api-Automation-Logs
+            path: logs/
