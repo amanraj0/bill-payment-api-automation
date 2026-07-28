@@ -20,7 +20,6 @@ jobs:
 
     env:
       TEST_ENV: ${{github.event.inputs.environment}}
-      TEST_SCRIPT: ${{github.event.inputs.script}}
 
     steps:
       - name: Checkout Repo
@@ -35,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Run Tests
-        run: npm run ${{TEST_SCRIPT}}
+        run: npm run ${{github.event.inputs.script}}
 
       - name: Upload Report
         if: always()
